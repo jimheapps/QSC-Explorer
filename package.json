@@ -1,7 +1,7 @@
 {
   "name": "block-explorer",
   "version": "1.4.0",
-  "description": "QRL block explorer",
+  "description": "QSC block explorer",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.18.3",
@@ -28,7 +28,7 @@
     "lodash": "^4.17.21",
     "mathjs": "^10.6.3",
     "meteor-babel-helpers": "0.0.3",
-    "meteor-node-stubs": "^1.2.3",
+    "meteor-node-stubs": "^1.2.10",
     "path": "^0.12.7",
     "tmp": "0.2.1",
     "underscore": "^1.13.4",
@@ -40,10 +40,10 @@
     "url": "git+https://github.com/theQRL/block-explorer.git"
   },
   "keywords": [
-    "QRL",
+    "QSC",
     "blockchain"
   ],
-  "author": "QRL contributors",
+  "author": "QSC contributors",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/theQRL/block-explorer/issues"

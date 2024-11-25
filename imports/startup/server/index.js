@@ -18,7 +18,7 @@ import {
   EXPLORER_VERSION, SHOR_PER_QUANTA, anyAddressToRaw,
 } from '../both/index.js'
 
-const PROTO_PATH = Assets.absoluteFilePath('qrlbase.proto').split('qrlbase.proto')[0]
+const PROTO_PATH = Assets.absoluteFilePath('qscbase.proto').split('qscbase.proto')[0]
 console.log(`Using local folder ${PROTO_PATH} for Proto files`)
 
 // Apply BrowserPolicy
@@ -112,12 +112,12 @@ const loadGrpcClient = (endpoint, callback) => {
     oneofs: true,
     includeDirs: [PROTO_PATH],
   }
-  protoloader.load(`${PROTO_PATH}qrlbase.proto`).then((packageDefinitionBase) => {
+  protoloader.load(`${PROTO_PATH}qscbase.proto`).then((packageDefinitionBase) => {
     const baseGrpcObject = grpc.loadPackageDefinition(packageDefinitionBase)
-    const client = new baseGrpcObject.qrl.Base(endpoint, grpc.credentials.createInsecure())
+    const client = new baseGrpcObject.qsc.Base(endpoint, grpc.credentials.createInsecure())
     client.getNodeInfo({}, (err, res) => {
       if (err) {
-        console.log(`Error fetching qrl.proto from ${endpoint}`)
+        console.log(`Error fetching qsc.proto from ${endpoint}`)
         callback(err, null)
       } else {
         // Write a new temp file for this grpc connection
@@ -130,8 +130,8 @@ const loadGrpcClient = (endpoint, callback) => {
           protoloader.load(qrlProtoFilePath, options).then((packageDefinition) => {
             const grpcObject = grpc.loadPackageDefinition(packageDefinition)
             // Create the gRPC Connection
-            qrlClient[endpoint] = new grpcObject.qrl.PublicAPI(endpoint, grpc.credentials.createInsecure())
-            console.log(`qrlClient loaded for ${endpoint} from ${qrlProtoFilePath}`)
+            qrlClient[endpoint] = new grpcObject.qsc.PublicAPI(endpoint, grpc.credentials.createInsecure())
+            console.log(`qscClient loaded for ${endpoint} from ${qrlProtoFilePath}`)
             callback(null, true)
           })
         })
@@ -241,7 +241,7 @@ const updateAutoIncrement = () => {
 // Server Startup
 if (Meteor.isServer) {
   Meteor.startup(() => {
-    console.log(`QRL Explorer Starting - Version: ${EXPLORER_VERSION}`)
+    console.log(`QSC Explorer Starting - Version: ${EXPLORER_VERSION}`)
     // Attempt to create connections with all nodes
     connectNodes()
     // remove cached data whilst cache featureset being iterated
@@ -1187,7 +1187,7 @@ JsonRoutes.add('get', '/api/a/:id', (req, res) => {
       response = e
     }
   } else {
-    response = { found: false, message: 'Invalid QRL address', code: 3000 }
+    response = { found: false, message: 'Invalid QSC address', code: 3000 }
   }
   JsonRoutes.sendResult(res, {
     data: response,
